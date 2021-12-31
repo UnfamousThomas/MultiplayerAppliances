@@ -1,0 +1,41 @@
+name: MultiplayerAppliances
+version: '${project.version}'
+main: us.unfamousthomas.multiplayerappliances.MultiplayerAppliances
+api-version: 1.18
+authors: [ UnfamousThomas ]
+description: A small plugin which adds some "appliances" to the server.
+
+commands:
+  message:
+    description: Message another person!
+    aliases: [ msg, m ]
+    usage: /<command> target msg
+  reply:
+    description: Response to last message!
+    usage: /<command> msg
+    aliases: [ r ]
+  joke:
+    description: Tells a (bad) joke!
+    usage: /<command>
+  admin:
+    description: Admin utilities.
+    usage: /<command>
+  config-reload:
+    description: Reloads all configs.
+    usage: /<command>
+    aliases: [ cr, c-r, config, ma]
+  claim:
+    description: Claim a chunk
+    usage: /<command>
+  unclaim:
+    description: Unclaims a chunk
+    usage: /<command>
+  addmember:
+    description: Add a member
+    usage: /<command>
+  removemember:
+    description: Removes a member
+    usage: /<command>
+  chunkinfo:
+    description: Displays info of current chunk
+    usage: /<command>
