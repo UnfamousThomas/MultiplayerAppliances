@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import us.unfamousthomas.multiplayerappliances.MultiplayerAppliances;
 import us.unfamousthomas.multiplayerappliances.enums.JokeMessage;
 import us.unfamousthomas.multiplayerappliances.enums.PluginMessages;
+import us.unfamousthomas.multiplayerappliances.objects.TeleportRequest;
 
 import java.util.*;
 
@@ -27,7 +28,18 @@ public class TeleportCommand implements CommandExecutor {
                 return true;
             }
 
-            MultiplayerAppliances.getPluginInstance().getTeleportManager().addRequest(player, target);
+            if(target.getUniqueId().equals(player.getUniqueId())) {
+                player.sendMessage("That is yourself. Stop.");
+                return true;
+            }
+
+            TeleportRequest request = MultiplayerAppliances.getPluginInstance().getTeleportManager().findRequest(player.getUniqueId(), target.getUniqueId());
+            if(request != null && !(request.isExpired())) {
+                MultiplayerAppliances.getPluginInstance().getTeleportManager().addRequest(player, target);
+            } else {
+                player.sendMessage("Similar request already active");
+                return true;
+            }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("accept")) {
             String acceptFrom = args[1];
             UUID uuid = Bukkit.getOfflinePlayer(acceptFrom).getUniqueId();

@@ -20,7 +20,7 @@ public class TeleportRequest {
     }
 
     public void confirmTeleport() {
-        if(validUntil < System.currentTimeMillis()) {
+        if(isExpired()) {
             //todo send message cant tp bc expired
             removeRequest();
             return;
@@ -50,5 +50,9 @@ public class TeleportRequest {
 
     private void removeRequest() {
         MultiplayerAppliances.getPluginInstance().getTeleportManager().removeRequest(this);
+    }
+
+    public boolean isExpired() {
+        return validUntil < System.currentTimeMillis();
     }
 }
