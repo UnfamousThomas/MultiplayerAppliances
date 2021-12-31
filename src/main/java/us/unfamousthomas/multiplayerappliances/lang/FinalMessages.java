@@ -9,6 +9,7 @@ public class FinalMessages {
     public final static String adminSettingsFile = "adminSettings.yml";
     //Extra Stuff
     public final static String pluginName = "MultiplayerAppliances";
+    public final static int max_chunks = 64;
 
 
 

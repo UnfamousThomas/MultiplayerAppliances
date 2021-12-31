@@ -39,3 +39,7 @@ commands:
   chunkinfo:
     description: Displays info of current chunk
     usage: /<command>
+  tpa:
+    description: Request a teleport to user
+    usage: /<command> (user|accept) [user]
+    aliases: [teleport]

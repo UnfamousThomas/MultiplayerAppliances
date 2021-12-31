@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import us.unfamousthomas.multiplayerappliances.MultiplayerAppliances;
 import us.unfamousthomas.multiplayerappliances.enums.PluginMessages;
 import us.unfamousthomas.multiplayerappliances.managers.ChunkManager;
+import us.unfamousthomas.multiplayerappliances.objects.ClaimedChunk;
 
 public class AddMemberCommand implements CommandExecutor {
     @Override
@@ -41,9 +42,13 @@ public class AddMemberCommand implements CommandExecutor {
             player.sendMessage("This chunk is not claimed OR is not yours.");
             return true;
         }
+        ClaimedChunk claimedChunk = chunkManager.getChunk(chunkId);
 
+        if(claimedChunk.getMembers().contains(memberPlayer.getUniqueId())) {
+            player.sendMessage("User already a member of this chunk.");
+            return true;
+        }
         chunkManager.getChunk(chunkId).addMember(memberPlayer.getUniqueId());
-
         player.sendMessage(playerName + " has been added to the chunk as a member.");
         return true;
     }

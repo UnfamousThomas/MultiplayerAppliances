@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import us.unfamousthomas.multiplayerappliances.MultiplayerAppliances;
 import us.unfamousthomas.multiplayerappliances.enums.PluginMessages;
 import us.unfamousthomas.multiplayerappliances.managers.ChunkManager;
+import us.unfamousthomas.multiplayerappliances.objects.ClaimedChunk;
 
 import java.util.UUID;
 
@@ -41,6 +42,13 @@ public class RemoveMemberCommand implements CommandExecutor {
 
         if(!chunkManager.isChunk(chunkId) || chunkManager.getChunk(chunkId).getOwner() != player.getUniqueId()) {
             player.sendMessage("This chunk is not claimed OR is not yours.");
+            return true;
+        }
+
+        ClaimedChunk claimedChunk = chunkManager.getChunk(chunkId);
+
+        if(!claimedChunk.getMembers().contains(memberPlayer.getUniqueId())) {
+            player.sendMessage("User is not a member of this chunk.");
             return true;
         }
 

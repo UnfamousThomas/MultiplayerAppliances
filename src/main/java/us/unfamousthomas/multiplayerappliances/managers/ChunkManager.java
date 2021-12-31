@@ -17,12 +17,14 @@ public class ChunkManager {
     private MultiplayerAppliances pluginInstance;
     private static String fileName = "claimedchunks.json";
 
+    private Map<String, ClaimedChunk> chunksMap = new HashMap<>();
+    private Map<UUID, Integer> chunksClaimedCount = new HashMap<>();
+
     public ChunkManager(MultiplayerAppliances plugin) {
         pluginInstance = plugin;
         loadChunks();
     }
 
-    private Map<String, ClaimedChunk> chunksMap = new HashMap<>();
 
     public String generateChunkId(Chunk chunk) {
         return chunk.getX() + "-" + chunk.getZ() + "-" + chunk.getWorld().getName();
@@ -55,6 +57,16 @@ public class ChunkManager {
 
     public void unclaimChunk(String chunkId) {
         chunksMap.remove(chunkId);
+        saveChunks();
+    }
+
+    public void addMember(String chunkId, UUID uuid) {
+        getChunk(chunkId).addMember(uuid);
+        saveChunks();
+    }
+
+    public void removeMember(String chunkId, UUID uuid) {
+        getChunk(chunkId).removeMember(uuid);
         saveChunks();
     }
 
@@ -99,11 +111,42 @@ public class ChunkManager {
                         System.out.println("- " + Bukkit.getOfflinePlayer(member).getName());
                     });
                     System.out.println("-----------------------------------------");
+
+                    addChunksClaimedCount(entry.getValue().getOwner(), 1);
                 }            }
         } catch (IOException e) {
             System.out.println("Error loading.");
             e.printStackTrace();
         }
 
+    }
+
+    public void addChunksClaimedCount(UUID uuid, Integer num) {
+        Integer count;
+        if(chunksClaimedCount.containsKey(uuid)) {
+            count = chunksClaimedCount.get(uuid) + num;
+        } else {
+            count= num;
+        }
+        chunksClaimedCount.remove(uuid);
+        chunksClaimedCount.put(uuid, count);
+    }
+
+    public void removeChunksClaimedCount(UUID uuid, Integer num) {
+        int count;
+        if(chunksClaimedCount.containsKey(uuid)) {
+            count = chunksClaimedCount.get(uuid) - num;
+            if(count < 0) {
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
+        chunksClaimedCount.remove(uuid);
+        chunksClaimedCount.put(uuid, count);
+    }
+
+    public int getChunkCount(UUID uuid) {
+        return chunksClaimedCount.getOrDefault(uuid, 0);
     }
 }

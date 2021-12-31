@@ -1,4 +1,4 @@
-package us.unfamousthomas.multiplayerappliances.commands;
+package us.unfamousthomas.multiplayerappliances.commands.claims;
 
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
@@ -27,6 +27,7 @@ public class UnClaimCommand implements CommandExecutor {
             return true;
         }
         chunkManager.unclaimChunk(chunkId);
+        chunkManager.removeChunksClaimedCount(player.getUniqueId(), 1);
         player.sendMessage("Chunk has been unclaimed, lol.");
         return true;
     }

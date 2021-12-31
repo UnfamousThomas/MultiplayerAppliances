@@ -4,25 +4,25 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.multiplayerappliances.commands.*;
-import us.unfamousthomas.multiplayerappliances.commands.claims.AddMemberCommand;
-import us.unfamousthomas.multiplayerappliances.commands.claims.ChunkInfoCommand;
-import us.unfamousthomas.multiplayerappliances.commands.claims.ClaimCommand;
-import us.unfamousthomas.multiplayerappliances.commands.claims.RemoveMemberCommand;
+import us.unfamousthomas.multiplayerappliances.commands.claims.*;
 import us.unfamousthomas.multiplayerappliances.configuration.AdminSettingsConfig;
 import us.unfamousthomas.multiplayerappliances.enums.PluginMessages;
 import us.unfamousthomas.multiplayerappliances.listeners.ClaimListener;
 import us.unfamousthomas.multiplayerappliances.listeners.PlayerListener;
 import us.unfamousthomas.multiplayerappliances.listeners.ServerListListener;
 import us.unfamousthomas.multiplayerappliances.managers.ChunkManager;
+import us.unfamousthomas.multiplayerappliances.managers.TeleportManager;
 
 public final class MultiplayerAppliances extends JavaPlugin {
     private static MultiplayerAppliances pluginInstance;
     private static ChunkManager chunkManager;
+    private static TeleportManager teleportManager;
 
     @Override
     public void onEnable() {
         pluginInstance = this;
         chunkManager = new ChunkManager(pluginInstance);
+        teleportManager = new TeleportManager(pluginInstance);
 
         setupAdminSettings();
 
@@ -36,6 +36,7 @@ public final class MultiplayerAppliances extends JavaPlugin {
         this.getCommand("removemember").setExecutor(new RemoveMemberCommand());
         this.getCommand("config-reload").setExecutor(new ConfigReloadCommand());
         this.getCommand("chunkinfo").setExecutor(new ChunkInfoCommand());
+        this.getCommand("tpa").setExecutor(new TeleportCommand());
 
         getServer().getPluginManager().registerEvents(new ServerListListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -73,6 +74,10 @@ public final class MultiplayerAppliances extends JavaPlugin {
 
     public ChunkManager getChunkManager() {
         return chunkManager;
+    }
+
+    public TeleportManager getTeleportManager() {
+        return teleportManager;
     }
 }
 
