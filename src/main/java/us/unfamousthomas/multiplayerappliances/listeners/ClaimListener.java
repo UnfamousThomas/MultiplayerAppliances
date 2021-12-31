@@ -18,12 +18,11 @@ public class ClaimListener implements Listener {
         }
         ChunkManager chunkManager = MultiplayerAppliances.getPluginInstance().getChunkManager();
         String id = chunkManager.generateChunkId(e.getClickedBlock().getChunk());
-        System.out.println(id);
 
         if(chunkManager.isChunk(id)) {
             Player player = e.getPlayer();
             ClaimedChunk chunk = chunkManager.getChunk(id);
-            if(player.getUniqueId() != chunk.getOwner() && !(chunk.getMembers().contains(player.getUniqueId()))) {
+            if(!(player.getUniqueId().equals(chunk.getOwner())) && !(chunk.getMembers().contains(player.getUniqueId()))) {
                 e.setCancelled(true);
                 player.sendMessage("You cannot build here!");
                 //You cannot build here

@@ -89,7 +89,7 @@ public class ChunkManager {
                 Type typeOfHashMap = new TypeToken<Map<String, ClaimedChunk>>() { }.getType();
                 Map claimed = gson.fromJson(reader,typeOfHashMap);
                 chunksMap = claimed;
-                System.out.println("Loaded.");
+                System.out.println("-----------------------------------------");
 
                 for (Map.Entry<String, ClaimedChunk> entry : chunksMap.entrySet()) {
                     System.out.println("Owner:" + Bukkit.getOfflinePlayer(entry.getValue().getOwner()).getName());

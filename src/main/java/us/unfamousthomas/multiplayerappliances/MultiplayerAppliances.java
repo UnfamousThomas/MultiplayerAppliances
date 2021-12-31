@@ -1,6 +1,5 @@
 package us.unfamousthomas.multiplayerappliances;
 
-import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,10 +14,6 @@ import us.unfamousthomas.multiplayerappliances.listeners.ClaimListener;
 import us.unfamousthomas.multiplayerappliances.listeners.PlayerListener;
 import us.unfamousthomas.multiplayerappliances.listeners.ServerListListener;
 import us.unfamousthomas.multiplayerappliances.managers.ChunkManager;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
 
 public final class MultiplayerAppliances extends JavaPlugin {
     private static MultiplayerAppliances pluginInstance;
