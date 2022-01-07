@@ -9,9 +9,7 @@ import us.unfamousthomas.multiplayerappliances.objects.ClaimedChunk;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ChunkManager {
     private MultiplayerAppliances pluginInstance;
@@ -68,6 +66,18 @@ public class ChunkManager {
     public void removeMember(String chunkId, UUID uuid) {
         getChunk(chunkId).removeMember(uuid);
         saveChunks();
+    }
+
+    public List<ClaimedChunk> getAllClaimedChunks(UUID owner) {
+        List<ClaimedChunk> chunks = new ArrayList<>();
+        chunksMap.forEach((id,chunk)-> {
+            if(chunk.getOwner() == owner) {
+                chunks.add(chunk);
+            }
+        });
+
+        return chunks;
+
     }
 
     private ClaimedChunk createNewChunk(UUID owner, Chunk chunk) {
